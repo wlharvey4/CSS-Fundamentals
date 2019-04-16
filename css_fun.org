@@ -1,0 +1,525 @@
+# -*- mode:org; fill-column:79; -*-
+#+TITLE:CSS Fundamentals
+#+AUTHOR:Tyler Clark
+#+DATE:<2019-04-15 Mon 23:58>
+
+Can you center an HTML element? Do you know how the box model works?
+CSS is a fundamental language imperative to working with websites. It
+controls all the visual aspects of a site, from colors to layouts.
+
+Even the most experienced developer can learn something new when it
+comes to using and understanding how the browser interprets CSS. In
+this course, we will slowly style a website according to a mocked
+image. Let’s walk through:
+- specificity
+- fonts
+- the box model
+- margins
+- padding
+- positioning
+- and much more!
+
+* Introduction
+:PROPERTIES:
+:unnumbered: t
+:END:
+#+texinfo: @iftex
+Can you center an HTML element? Do you know how the box model works?
+CSS is a fundamental language imperative to working with websites. It
+controls all the visual aspects of a site, from colors to layouts.
+
+Even the most experienced developer can learn something new when it
+comes to using and understanding how the browser interprets CSS. In
+this course, we will slowly style a website according to a mocked
+image. Let’s walk through:
+- specificity
+- fonts
+- the box model
+- margins
+- padding
+- positioning
+- and much more!
+
+#+texinfo: @end iftex
+{{{heading(Source and Code)}}}
+
+{{{noindent}}}Based upon [[https://egghead.io/courses/css-fundamentals][CSS Fundamentals]], presented by {{{author}}}.
+
+{{{noindent}}}Code can be found at https://github.com/twclark0/css-fundamentals.git
+
+* Set CSS Properties and Values---Syntax
+#+CINDEX:syntax
+The CSS syntax writes somewhat similar to JavaScript objects. It is
+important to understand where to properly set *properties*,
+*selectors*, and *values* within your CSS.  /In this lesson we’ll talk
+about this syntax and work an example./
+
+** CSS Components
+Instructor: 00:00 CSS is a language that controls how documents are
+presented on the Web to users. This means it controls how text,
+images, and other elements lay out on a page, how they respond to
+different devices, and so much more.
+
+#+CINDEX:components, 2 main
+00:14 We can write a quick example of CSS by styling some specific
+content to appear as the color =red= on the page.
+
+CSS has two main {{{dfn(components)}}}.
+
+1. Selector and corresponding block
+2. Declaration: property and corresponding value; must end with a
+   semicolon.
+
+#+caption[CSS Components]:CSS Component: Selector, Declaration Block, Declaration (property-value)
+#+name:css-components
+#+begin_src css
+  h1 {			(ref:selector-block)
+      color: red;		(ref:property-value)
+  }
+#+end_src
+
+{{{heading(Selector and Declaration Block)}}}
+
+#+CINDEX:selector, component
+#+CINDEX:block, component
+#+CINDEX:block, declaration
+First, the selector and its corresponding block.  This first statement
+({{{samp(h1)}}}) is called a {{{dfn([[(selector-block)][selector]])}}}.  This is how we tell
+the browser which elements of HTML we want to apply the defined styles
+to.
+
+#+CINDEX:declaration block, CSS
+#+CINDEX:CSS declaration block
+00:35 Everything defined inside of these curly braces will apply to
+this selector only. These are also called {{{dfn([[(selector-block)][CSS declaration
+blocks]])}}}.  Inside of these blocks are the {{{dfn([[(property-value)][CSS
+declarations]])}}}.
+
+{{{heading(Declarations---Properties and Values)}}}
+
+#+CINDEX:property, component
+00:48 On the left-hand side of the colon, these are called [[(property-value)][properties]].
+{{{dfn(Properties)}}} are the feature of the page we want to style.
+In our case, we want to change the color feature of our ~h1~ selector
+to be the color =red=.
+
+01:01 On the right side of our colon, these are called
+{{{dfn(values)}}}.  Each property has a specific set of valid values
+that can be chosen to implement on a website.  This is the how we want
+to change the defined feature.
+
+01:15 We end each CSS declaration with a semicolon.  This is required,
+or the browser will not render the style correctly.
+
+* Use Selectors to Style HTML Elements
+CSS gives us the ability to work with many different types of
+selectors to target and style HTML.  In this lesson we will understand
+how to use classes, ids, elements, attributes, and the universal
+selector.
+
+** Targeting Elements Using Selectors
+#+CINDEX:target html elements
+Instructor: 00:00 There are many different ways you can target HTML to
+style.  Here in the browser, I'm running some basic unstyled HTML,
+which is also shown here.
+
+#+caption:{{{code(home.html)}}} Unstyled Code
+#+name:unstyled-home.html
+#+begin_src html -n :noweb no-export
+<<home.html>>
+#+end_src
+
+#+begin_comment
+NOTE: If the following long code source listing is given a 'caption',
+it will be wrapped in a '@float', and will appear on one page only,
+truncated at the last line on that page.  By placing the above code
+with a 'noweb' reference to the long code listing, a caption can be
+generated and placed into the Listings section at the end of the
+document, and all of the code will appear on multiple pages.  This is
+because only @float's can be placed in lists.
+#+end_comment
+
+#+name:home.html
+#+begin_src html -n
+  <!DOCTYPE html>
+  <html lang="eng">
+
+  <head>
+      <title>Tyler's Portfolio</title>
+      <link rel="stylesheet" type="text/css" href="style.css">
+      <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,700"
+        rel="stylesheet">
+      <style>
+          .container {
+              max-width: 1200px;
+              margin: auto;
+          }
+
+          body {
+              background: hsl(0, 0%, 13%);
+              font-family: 'Open Sans', sans-serif;
+              color: hsl(0, 0%, 90%);
+          }
+      </style>
+  </head>
+
+  <body>
+      <div class='container'>
+          <header>
+              <nav>
+                  <div class=' headerContainer '>
+                      <a href='# ' class='logo '>
+                          Tyler.
+                      </a>
+                      <ul class='header--ul '>
+                          <li>
+                              <a href='#'>Home</a>
+                          </li>
+                          <li>
+                              <a href='#'>About</a>
+                          </li>
+                          <li>
+                              <a href='#'>Experience</a>
+                          </li>
+                          <li>
+                              <a href='#'>Portfolio</a>
+                          </li>
+                          <li>
+                              <a href='#'>Services</a>
+                          </li>
+                          <li>
+                              <a href='#'>Blog</a>
+                          </li>
+                          <li>
+                              <a href='#'>Contact</a>
+                          </li>
+                      </ul>
+                  </div>
+              </nav>
+              <div>
+                  <div>
+                      <div>
+                          <div>
+                              <div>
+                                  <h5>Hello, I am</h5>
+                                  <h1>Tyler Clark</h1>
+                                  <p>UX Designer / Frontend Developer</p>
+                                  <div>
+                                      <a href="#">
+                                          <i></i>
+                                      </a>
+                                      <a href="#">
+                                          <i></i>
+                                      </a>
+                                      <a href="#">
+                                          <i></i>
+                                      </a>
+                                      <a href="#">
+                                          <i></i>
+                                      </a>
+                                      <a href="#">
+                                          <i></i>
+                                      </a>
+                                      <a href="#">
+                                          <i></i>
+                                      </a>
+                                  </div>
+                                  <a>View My Portfolio
+                                      <i></i>
+                                  </a>
+                              </div>
+                          </div>
+                          <div>
+                              <img src="img/portfolio-pic-01.png" alt="" />
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div>
+                  <div>
+                      <span></span>
+                      <nav>
+                          <ul>
+                              <li>
+                                  <a>Home</a>
+                              </li>
+                              <li>
+                                  <a>About</a>
+                              </li>
+                              <li>
+                                  <a>Experience</a>
+                              </li>
+                              <li>
+                                  <a>Portfolio</a>
+                              </li>
+                              <li>
+                                  <a>Services</a>
+                              </li>
+                              <li>
+                                  <a>Blog</a>
+                              </li>
+                              <li>
+                                  <a>Contact</a>
+                              </li>
+                          </ul>
+                      </nav>
+                      <div>
+                          <div>
+                              <a href="#">
+                                  <i></i>
+                              </a>
+                              <a href="#">
+                                  <i></i>
+                              </a>
+                              <a href="#">
+                                  <i></i>
+                              </a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <a id="close_sidebar" href="#"></a>
+          </header>
+          <section>
+              <div>
+                  <div>
+                      <div>
+                          <h3>My Services</h3>
+                      </div>
+                  </div>
+                  <div>
+                      <div>
+                          <div>
+                              <div>
+                                  <i></i>
+                              </div>
+                              <div>Web Development</div>
+                              <p>Lorem ipsum dolor sit amet, consectetur adipiscing
+                                elit, sed do eiusmod tempor incididunt ut
+                                labore et dolore magna aliqua.</p>
+                          </div>
+                      </div>
+                      <div>
+                          <div>
+                              <div>
+                                  <i></i>
+                              </div>
+                              <div>Web Design</div>
+                              <p>Lorem ipsum dolor sit amet, consectetur adipiscing
+                                elit, sed do eiusmod tempor incididunt ut
+                                labore et dolore magna aliqua.</p>
+                          </div>
+                      </div>
+                      <div>
+                          <div>
+                              <div>
+                                  <i></i>
+                              </div>
+                              <div>Social Media</div>
+                              <p>Lorem ipsum dolor sit amet, consectetur adipiscing
+                                elit, sed do eiusmod tempor incididunt ut
+                                labore et dolore magna aliqua.</p>
+                          </div>
+                      </div>
+                      <div>
+                          <div>
+                              <div>
+                                  <i></i>
+                              </div>
+                              <div>Photography</div>
+                              <p>Lorem ipsum dolor sit amet, consectetur adipiscing
+                                elit, sed do eiusmod tempor incididunt ut
+                                labore et dolore magna aliqua.</p>
+                          </div>
+                      </div>
+                      <div>
+                          <div>
+                              <div>
+                                  <i></i>
+                              </div>
+                              <div>Graphic Design</div>
+                              <p>Lorem ipsum dolor sit amet, consectetur adipiscing
+                                elit, sed do eiusmod tempor incididunt ut
+                                labore et dolore magna aliqua.</p>
+                          </div>
+                      </div>
+                      <div>
+                          <div>
+                              <div>
+                                  <i></i>
+                              </div>
+                              <div>Content Writing</div>
+                              <p>Lorem ipsum dolor sit amet, consectetur adipiscing
+                                elit, sed do eiusmod tempor incididunt ut
+                                labore et dolore magna aliqua.</p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </section>
+          <footer>
+              <div>
+                  <div>
+                      <div>
+                          <div>
+                              <span>&copy; My portfolio</span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </footer>
+      </div>
+  </body>
+
+  </html>
+#+end_src
+
+{{{heading(Use CSS Selectors to Target Elements)}}}
+
+Let's use CSS to target and style this ~h1~ tag that holds my name.
+
+{{{subheading(Type Selector)}}}
+
+#+CINDEX:type selector
+00:17 The first way we can target and style the ~h1~ is by using a
+[[(type-selector)][*type selector*]].  {{{dfn(Type selectors)}}} match the provided node.
+All ~h1~ elements within the scope of this CSS will have a blue color.
+
+#+begin_src css
+h1 {			(ref:type-selector)
+ color: blue;
+}
+#+end_src
+
+{{{subheading(universal selector)}}}
+
+#+CINDEX:universal selector
+00:31 We could affect not only this one ~h1~, but every element by
+using the {{{dfn(universal selector)}}}, =*=.  This accomplishes our
+goal, but it's not very efficient, because the browser will have to
+apply it to many nodes.
+
+#+begin_src css
+,* {
+ color: blue;
+}
+
+#+end_src
+
+00:43 Instead, let's go ahead and add a =class= attribute to our ~h1~,
+and we'll give it a string of {{{samp(name)}}}.
+
+#+begin_src html
+<h5>Hello,I am</h5>
+<h1 class='name'>Tyler Clark</h1>		(ref:class-attribute)
+<p>UX Designer / Fronted Developer</p>
+#+end_src
+
+{{{subheading(Class Selector)}}}
+
+#+CINDEX:class selector
+Instead of our styles, we'll change this universal selector to =.name=
+and refresh.  As you can see, now we're only targeting our one ~h1~.
+
+This is the third type of selector, the {{{dfn([[(class-selector)][class selector]])}}}.
+This will match in style and every element that has the [[(class-attribute)][=class=]]
+attribute of =name=.
+
+#+begin_src css
+.name {				(ref:class-selector)
+ color: blue;
+}
+#+end_src
+
+{{{subheading(Id Selector)}}}
+
+#+CINDEX:id selector
+01:08 When we are targeting classes, we use the dot in front of the
+providing class name.  There is also the {{{dfn([[(id-selector)][=id= selector]])}}},
+which is also an attribute called [[(id-element)][=id= on the HTML element]].
+
+#+begin_src html
+<div>
+  <h5>Hello, I am</h5>
+  <h1 id='name'>Tyler Clark</h1>		(ref:id-element)
+#+end_src
+
+However, we don't target IDs with the dot, but with the =#=.  Our
+element is still blue.
+
+#+begin_src css
+#name {				(ref:id-selector)
+ color: blue;
+}
+#+end_src
+
+{{{subheading(Attribute Selector)}}}
+
+#+CINDEX:attribute selector
+Let's go ahead and remove this =id= attribute and replace it with
+~data-name="name"~.
+
+#+begin_src html
+<div>
+  <h5>Hello, I am</h5>
+  <h1 data-name="name">Tyler Clark</h1>
+  <p>UX Designer / Fronted Developer</p>
+#+end_src
+
+01:36 Instead of our CSS, we'll do ~[data-name]="name"~.  If we save
+this and refresh, we'll see that we're still blue.
+
+#+begin_src css
+[data-name='name'] {		(ref:attribute-selector)
+ color: blue;
+}
+#+end_src
+
+While there are specific methods for targeting =class= and =id=
+element attributes, other attributes provided to HTML elements can be
+targeted as well by copying the attribute and placing it within square
+brackets. This is called using the {{{dfn([[(attribute-selector)][attribute selector]])}}}.
+
+* Utilize Selector Specificity to Control Applied Styles
+* Style Elements Using the Cascade
+* Apply CSS Styles with Inheritance
+* Debug CSS with Chrome Devtools
+* Understand CSS Layout with the Box Model
+* Control HTML Elements with Different CSS Units
+* Manipulate Colors with CSS
+* Add Backgrounds to HTML Elements
+* Hide and Show HTML Elements with CSS
+* Modify Font Style in CSS
+* Positioning HTML Elements using CSS
+* Customize CSS Selectors with Pseudo Classes
+* Use CSS Media Queries to Dynamically Apply Styles
+* Style a Logo and Navigation on a Website with CSS
+* Program Listings
+:PROPERTIES:
+:unnumbered: t
+:END:
+#+texinfo: @listoffloats Listing
+* Main Index
+:PROPERTIES:
+:index: cp
+:unnumbered: t
+:END:
+
+* Export Settings                                                  :noexport:
+#+texinfo_filename:css_fun.info
+#+texinfo_class: info
+#+texinfo_header:
+#+texinfo_post_header:
+#+subtitle:
+#+subauthor:
+#+texinfo_dir_category:WebDev
+#+texinfo_dir_title:CSS Fundamentals
+#+texinfo_dir_desc:Slowly style a website according to a mocked image.
+#+texinfo_printed_title:CSS Fundamentals
+#+macro:dfn @@texinfo:@dfn{@@$1@@texinfo:}@@
+#+macro:samp @@texinfo:@samp{@@$1@@texinfo:}@@
+#+macro:code @@texinfo:@code{@@$1@@texinfo:}@@
+#+macro:heading @@texinfo:@heading@@ $1
+#+macro:subheading @@texinfo:@subheading@@ $1
+#+macro:noindent @@texinfo:@noindent @@
