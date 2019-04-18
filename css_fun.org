@@ -1,7 +1,7 @@
 # -*- mode:org; fill-column:79; -*-
 #+TITLE:CSS Fundamentals
 #+AUTHOR:Tyler Clark
-#+DATE:<2019-04-17 Wed 23:54>
+#+DATE:<2019-04-18 Thu 00:18>
 
 Can you center an HTML element? Do you know how the box model works?
 CSS is a fundamental language imperative to working with websites. It
@@ -730,6 +730,100 @@ order.*
 #+end_src
 
 * Apply CSS Styles with Inheritance
+The cascade is frequently conflated with the concept of inheritance.  These two
+topics are related; however you should try to understand each individually.
+Let's apply color styles to a =<ul>= and see how it affects our child =<li>=s.
+As well as use the =inherit= and =initial property= values.
+
+** Inheritance vs Cascade
+#+CINDEX:inheritance, dfn
+00:00 in {{{file(home.html)}}}, we have the basic HTML to make a navigation.
+Inside of our {{{file(style.css)}}}, if we did =ul color= as =blue= and
+refresh, we see that we get this color style applied to all of our =<li>=s
+inside the =<ul>=.  This is called {{{dfn(inheritance)}}}, meaning that /some
+styles are carried to the child elements within the HTML tree/.
+
+#+begin_src css
+ul {
+  color: blue;
+}
+#+end_src
+
+#+CINDEX:inheritance properties
+00:20 Most of the accepted inherited properties involve text, such as =color=,
+=font=, =font-family=, =font-size=, and so on, while properties that do not are
+those like =padding=, =margin=, =height=, and =width=.
+
+{{{heading(Controlling Inheritance)}}}
+
+00:33 We can also control inheritance. For example, if we did =li= with a color
+of =red=.
+
+#+begin_src css
+ul {
+  color: blue;
+}
+
+li {
+  color: red;
+}
+#+end_src
+
+Then, inside of home, we gave this home =li= a class of =home=.
+
+#+begin_src html
+<ul>
+  <li class='home'>
+#+end_src
+
+#+CINDEX:@code{inherit} property value
+Back inside of our style, if we targeted this =home= class of =color: inherit=
+and refresh the page, we see that all the =li=s are now =red= except for the
+=home= item.
+
+#+begin_src css
+ul {
+  color: blue;
+}
+
+li {
+  color: red;
+}
+
+.home {
+  color: inherit;
+}
+#+end_src
+
+00:54 The =li=s are =red= because we're *targeting* them in our css.  However,
+we tell the =home li= to apply the {{{dfn(inherited)}}} color, which in our
+case *is the color being passed to it from its parent =ul= element.*
+
+{{{heading(Using =initial= Property Value)}}}
+
+#+CINDEX:@code{initial} property value
+We can also use the =initial= property value, which, when we refresh the page,
+changes the text back to =black=.
+
+#+begin_src css
+ul {
+ color: blue;
+}
+
+li {
+ color: red;
+}
+
+.home {
+ color: initial;
+}
+#+end_src
+
+01:14 {{{dfn(initial)}}} *sets the property value to be the same as the value
+set for that element in the browser's default style sheet*. For our text, this
+is =black=.  =initial= is not supported in Internet Explorer, but is in all of the
+other browsers.
+
 * Debug CSS with Chrome Devtools
 * Understand CSS Layout with the Box Model
 * Control HTML Elements with Different CSS Units
@@ -763,9 +857,12 @@ order.*
 #+texinfo_dir_title:CSS Fundamentals
 #+texinfo_dir_desc:Slowly style a website according to a mocked image.
 #+texinfo_printed_title:CSS Fundamentals
+
+* Macro Definitions                                                :noexport:
 #+macro:dfn @@texinfo:@dfn{@@$1@@texinfo:}@@
 #+macro:samp @@texinfo:@samp{@@$1@@texinfo:}@@
 #+macro:code @@texinfo:@code{@@$1@@texinfo:}@@
 #+macro:heading @@texinfo:@heading@@ $1
 #+macro:subheading @@texinfo:@subheading@@ $1
 #+macro:noindent @@texinfo:@noindent @@
+#+macro:file @@texinfo:@file{@@$1@@texinfo:}@@
