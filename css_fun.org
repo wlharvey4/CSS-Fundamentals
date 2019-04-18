@@ -1,7 +1,7 @@
 # -*- mode:org; fill-column:79; -*-
 #+TITLE:CSS Fundamentals
 #+AUTHOR:Tyler Clark
-#+DATE:<2019-04-16 Tue 00:42>
+#+DATE:<2019-04-17 Wed 23:54>
 
 Can you center an HTML element? Do you know how the box model works?
 CSS is a fundamental language imperative to working with websites. It
@@ -636,6 +636,99 @@ div ul li {
 #+end_src
 
 * Style Elements Using the Cascade
+CSS is an acronym for cascading style sheets.  It can be frustrating when
+working with CSS and elements are not styling correctly because there is a
+conflicting style lower on the cascade.  Let's look at how the browser uses the
+cascade to determine which styles to implement.
+
+** Source Order Matters
+00:00 Let's go ahead and style all of our =li=s to be the color =red=.  We'll
+do that by doing ~li color red~.  Save and refresh.  Everything's red.
+
+#+begin_src css
+li {
+ color: red;
+}
+#+end_src
+
+Great.  Let's copy this and do the same thing, =li=, but give it a =color:
+blue= and save.  We'll see that everything turns to blue even though we still
+have the =color: red= above it.
+
+#+begin_src css
+li {
+  color: red;
+}
+
+li {
+  color: blue;
+}
+#+end_src
+
+#+CINDEX:Cascading Style Sheets (CSS)
+#+CINDEX:source order
+00:22 CSS is an acronym for Cascading Style Sheets, which points to the fact
+that source order, or how we define our styles, actually affects what gets
+displayed in the browser.  *When styles conflict like this, the browser will
+look at specificity, then to the source order that we define our styles.*
+
+00:40 *Since these two =li=s are the same specificity, the lower =li= color
+value is applied, as we see.*  This is true for any type of selector.  Let's
+give one =li= a class of =home=.
+
+#+begin_src html
+<ul>
+  <li class='home'>
+#+end_src
+
+Now we'll change this top =li= to a color of =red=, which will change the one
+to red.
+
+00:57 Then, if we add this second one of color blue, we'll see that blue still
+wins.  It doesn't matter what selector you use.  *The bottom of the cascade
+will always win.*
+
+#+begin_src css
+.home {
+  color: red;
+}
+
+.home {
+  color: blue;
+}
+#+end_src
+
+01:07 Let's go ahead and add another class to our =li=.  We'll say =home--two=.
+We'll change this second class to =home--two=.  Save and refresh.  You can see
+that it still stays blue.  It doesn't matter how many classes we have on this
+=li=.  *When two selectors collide, it's going to take whatever class is
+lower.*
+
+#+begin_src html
+<ul>
+  <li class='home home--two'>
+#+end_src
+
+#+begin_src css
+.home {
+  color: red;
+}
+
+.home--two {
+  color: blue;
+}
+#+end_src
+
+01:27 Even we switch up the order -- we do =home--two= and then =home= -- we
+see that blue still wins because =home--two= lives lower on the cascade.  *It
+doesn't matter the order of the classes here.  What matters is the source
+order.*
+
+#+begin_src html
+<ul>
+  <li class='home-two home'>
+#+end_src
+
 * Apply CSS Styles with Inheritance
 * Debug CSS with Chrome Devtools
 * Understand CSS Layout with the Box Model
