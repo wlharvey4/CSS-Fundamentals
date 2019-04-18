@@ -1,7 +1,7 @@
 # -*- mode:org; fill-column:79; -*-
 #+TITLE:CSS Fundamentals
 #+AUTHOR:Tyler Clark
-#+DATE:<2019-04-18 Thu 00:18>
+#+DATE:<2019-04-18 Thu 02:00>
 
 Can you center an HTML element? Do you know how the box model works?
 CSS is a fundamental language imperative to working with websites. It
@@ -139,8 +139,9 @@ document, and all of the code will appear on multiple pages.  This is
 because only @float's can be placed in lists.
 #+end_comment
 
+#+caption:The {{{file(home.html)}}} File
 #+name:home.html
-#+begin_src html -n
+#+begin_src html -n :tangle home.html
   <!DOCTYPE html>
   <html lang="eng">
 
@@ -375,6 +376,13 @@ because only @float's can be placed in lists.
   </html>
 #+end_src
 
+#+begin_src sh :exports no :results silent
+[ -d img ] || mkdir -v img
+cd img && \
+curl -LJO https://github.com/twclark0/css-fundamentals/blob/master/img/portfolio-pic-01.png && \
+curl -LJO https://github.com/twclark0/css-fundamentals/blob/master/img/fog.jpg
+#+end_src
+
 {{{heading(Use CSS Selectors to Target Elements)}}}
 
 Let's use CSS to target and style this ~h1~ tag that holds my name.
@@ -386,7 +394,9 @@ Let's use CSS to target and style this ~h1~ tag that holds my name.
 [[(type-selector)][*type selector*]].  {{{dfn(Type selectors)}}} match the provided node.
 All ~h1~ elements within the scope of this CSS will have a blue color.
 
-#+begin_src css
+#+caption:The {{{file(style.css)}}} File
+#+name:style.css
+#+begin_src css :tangle style.css
 h1 {			(ref:type-selector)
  color: blue;
 }
@@ -825,6 +835,69 @@ is =black=.  =initial= is not supported in Internet Explorer, but is in all of t
 other browsers.
 
 * Debug CSS with Chrome Devtools
+CSS can be hard to understand.  It can be frustrating when you expect the
+element to be styled one way and it just doesn’t.  Luckily our browsers like
+Chrome, come with devtools we can use to see which styles are overriding and
+which have issues.
+
+{{{heading(Overview of the Tools)}}}
+
+00:00 With our =li= styled =red=, we can see some of the tools that Chrome
+gives us by right-clicking on the element that we want to inspect and click on
+the =inspect= option.  When we use that inspect option, Chrome will take us to
+where the selected HTML lives inside of this tree.
+
+{{{heading(Removing Styles)}}}
+
+00:18 Within the =styles= tab, we can clearly see our =li= styled =red=.  This
+box is editable, which means we can remove this style by clicking on the
+=check= and add other properties such as =font-size=, which will automatically
+apply to our HTML.
+
+{{{heading(Hierarchy is Important)}}}
+
+00:38 The hierarchy order here is important.  We see that =li= receives other
+styles from Chrome, such as =text align=.  It also gets these bullet point-type
+styles also from Chrome, but it's being inherited from the =ul=.
+
+{{{heading(Source of Styles)}}}
+
+00:53 When we refresh our custom styles, our font size will go away.  What's
+also nice is Chrome will tell us where it got this style from.  We can see that
+it came from our {{{file(style.css)}}} and that's where it says it comes from.
+If we click on our {{{file(style.css)}}} in the dev tools, it takes us to that
+file.
+
+{{{heading(Adding a Class)}}}
+
+01:10 We can easily add a class to our a tag here by clicking on this =.cls=,
+which will open up an input box.  We can type in the name of the class that we
+want to add to our a tag, press the plus sign here, and it will give us a
+custom block where we can type in styles onto our newly created class.
+
+{{{heading(State)}}}
+
+01:29 We can see if our =a= tag has any =hover= state by clicking on the =HOV=
+here and clicking on the =hover=.  We can also activate the =active=, =focus=,
+and =visited= pseudo class as well.  These tabs here are showing us where our
+=a= tag lives inside the HTML tree.  See our HTML, then we have a couple =div=s,
+our =ul=, our =li=, and then our =a= tag.
+
+{{{heading(Box Model and Final State of Styles)}}}
+
+01:52 Finally, this bottom right box here is showing us two things.  The box
+model of the selected element and all of the final state styles of our element.
+This box model is telling us this element does not have any margins, borders,
+paddings around the element, just the text.
+
+02:11 We can manually add spacing by clicking on any of these dashes here and
+typing.  If we click on padding and typed in 10, our element will receive a
+=padding-top= of 10 pixels.
+
+02:22 As mentioned, if you ever find yourself lost in a sea of CSS styles, this
+will show the current applied state to the element.  This includes our specific
+coloring of =red= and all of the default styles our browser is applying to it.
+
 * Understand CSS Layout with the Box Model
 * Control HTML Elements with Different CSS Units
 * Manipulate Colors with CSS
@@ -866,3 +939,6 @@ other browsers.
 #+macro:subheading @@texinfo:@subheading@@ $1
 #+macro:noindent @@texinfo:@noindent @@
 #+macro:file @@texinfo:@file{@@$1@@texinfo:}@@
+
+* Open in Chrome                                                   :noexport:
+[[shell:open -a 'Google Chrome' home.html][Open home.html in Chrome]]
